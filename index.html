@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Surprise</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  font-family:Arial;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* START */
+#startScreen{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#startBtn{
+  font-size:70px;
+  cursor:pointer;
+}
+
+/* SCREEN */
+.screen{
+  display:none;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+/* IMAGE */
+#img{
+  width:380px;
+  height:380px;
+  object-fit:cover;
+  border-radius:20px;
+  border:3px solid gold;
+}
+
+/* ROSE */
+#rose{
+  font-size:140px;
+}
+
+/* VIDEO */
+#videoScreen{
+  position:relative;
+  height:100vh;
+}
+
+/* TEXT */
+#textArea{
+  position:absolute;
+  left:5%;
+  top:30%;
+  width:50%;
+  font-size:22px;
+}
+
+/* VIDEO */
+#video{
+  position:absolute;
+  right:5%;
+  top:20%;
+  width:300px;
+  height:380px;
+}
+
+/* HEARTS */
+.heart{
+  position:fixed;
+  top:-10px;
+  font-size:18px;
+  animation:fall 5s linear;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+}
+
+/* BUTTON */
+button{
+  margin-top:20px;
+  padding:10px 20px;
+  font-size:18px;
+  background:gold;
+  border:none;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<div id="startScreen">
+  <div id="startBtn" onclick="start()">🫀 START</div>
+</div>
+
+<!-- PHOTOS -->
+<div id="photoScreen" class="screen">
+  <img id="img" src="pic1.jpg">
+</div>
+
+<!-- ROSE -->
+<div id="roseScreen" class="screen">
+  <div id="rose">🌹</div>
+  <button onclick="toVideo()">NEXT</button>
+</div>
+
+<!-- VIDEO -->
+<div id="videoScreen">
+
+  <div id="textArea">
+    💖 LOVELY JAZAL 💖<br>
+    🎉 HAPPY BIRTHDAY MONTH 🎉<br>
+    ✨ YOU ARE MY EVERYTHING ✨
+  </div>
+
+  <video id="video" muted loop>
+    <source src="video.mp4">
+  </video>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="song.mp3">
+</audio>
+
+<script>
+
+let imgs=["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg"];
+let i=0;
+let slide;
+
+/* HEARTS */
+function hearts(){
+  setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💋";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  },200);
+}
+
+/* SLIDESHOW */
+function start(){
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("photoScreen").style.display="flex";
+
+  document.getElementById("music").play().catch(()=>{});
+
+  hearts();
+
+  let img=document.getElementById("img");
+  img.src=imgs[0];
+
+  slide=setInterval(()=>{
+    i=(i+1)%imgs.length;
+    img.src=imgs[i];
+  },2000);
+}
+
+/* PHOTO → ROSE */
+document.getElementById("photoScreen").onclick=function(){
+  document.getElementById("photoScreen").style.display="none";
+  document.getElementById("roseScreen").style.display="flex";
+}
+
+/* ROSE → VIDEO */
+function toVideo(){
+  document.getElementById("roseScreen").style.display="none";
+  document.getElementById("videoScreen").style.display="block";
+
+  document.getElementById("video").play();
+}
+
+</script>
+
+</body>
+</html>
