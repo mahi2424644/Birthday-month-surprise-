@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Love Surprise</title>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  font-family:Arial;
+  background: radial-gradient(circle,#1a000a,black);
+  color:white;
+  animation: heartbeat 3s infinite;
+}
+
+@keyframes heartbeat{
+  0%{filter:brightness(1);}
+  50%{filter:brightness(1.3);}
+  100%{filter:brightness(1);}
+}
+
+/* START */
+#startScreen{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#gift{
+  font-size:100px;
+  cursor:pointer;
+  animation:shake 1s infinite;
+}
+
+@keyframes shake{
+  0%{transform:rotate(-5deg);}
+  50%{transform:rotate(5deg);}
+  100%{transform:rotate(-5deg);}
+}
+
+/* SCREENS */
+.screen{
+  display:none;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+/* CAKE */
+#cake{ font-size:160px; animation:pop 1s infinite alternate; }
+@keyframes pop{ from{transform:scale(0.9);} to{transform:scale(1.1);} }
+
+/* IMAGE */
+#img{
+  width:380px;
+  height:380px;
+  object-fit:cover;
+  border-radius:25px;
+  border:4px solid gold;
+}
+
+/* RING */
+#ring{ font-size:170px; }
+
+/* NAME */
+#nameGlow{
+  position:absolute;
+  top:10%;
+  width:100%;
+  text-align:center;
+  font-size:55px;
+  color:pink;
+  text-shadow:0 0 10px red,0 0 30px purple;
+}
+
+/* VIDEO */
+#videoScreen{
+  position:fixed;
+  width:100%;
+  height:100%;
+  display:none;
+}
+
+#textArea{
+  position:absolute;
+  left:5%;
+  top:20%;
+  width:55%;
+  font-size:22px;
+  color:pink;
+  text-shadow:0 0 10px hotpink;
+  line-height:1.6;
+}
+
+#video{
+  position:absolute;
+  right:5%;
+  top:25%;
+  width:220px;
+  height:300px;
+  border-radius:15px;
+  object-fit:cover;
+}
+
+/* HEARTS */
+.heart,.petal{
+  position:fixed;
+  top:-10px;
+  animation:fall 6s linear;
+}
+
+@keyframes fall{
+  to{transform:translateY(100vh);opacity:0;}
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<div id="startScreen">
+  <div id="gift" onclick="start()">🎁</div>
+</div>
+
+<!-- CAKE -->
+<div id="cakeScreen" class="screen">
+  <div id="cake">🎂💖</div>
+  <button onclick="toPhotos()">Tap</button>
+</div>
+
+<!-- PHOTO -->
+<div id="photoScreen" class="screen">
+  <div id="nameGlow">JAZAL 💖</div>
+  <img id="img" src="pic1.jpg">
+  <button onclick="toLove()">I LOVE YOU 💖</button>
+</div>
+
+<!-- RING -->
+<div id="ringScreen" class="screen">
+  <div id="ring">💍✨</div>
+  <button onclick="toVideo()">Tap</button>
+</div>
+
+<!-- VIDEO -->
+<div id="videoScreen">
+  <div id="textArea"></div>
+
+  <video id="video" autoplay muted loop playsinline>
+    <source src="video.mp4">
+  </video>
+</div>
+
+<audio id="song" loop>
+  <source src="song.mp3">
+</audio>
+
+<script>
+
+let imgs=["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg"];
+let i=0;
+
+let text=[
+"💖 LOVELY JAZAL 💖",
+"✨ You are my world ✨",
+"💕 My heart belongs only to you 💕",
+"💍 Forever & always together 💍"
+];
+
+let t=0,c=0;
+
+/* HEARTS */
