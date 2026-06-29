@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Month 💖</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(black,#2b0000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  font-family:arial;
+}
+
+/* title */
+h1{
+  color:gold;
+  font-size:34px;
+  text-align:center;
+  animation: glow 1.5s infinite alternate;
+  cursor:pointer;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 10px red; }
+  to{ text-shadow:0 0 25px gold; }
+}
+
+/* image */
+img{
+  width:220px;
+  height:220px;
+  object-fit:cover;
+  border-radius:15px;
+  border:2px solid gold;
+  margin-top:10px;
+}
+
+/* hearts */
+.heart{
+  position:absolute;
+  color:red;
+  font-size:18px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
+}
+
+/* popup */
+.popup{
+  position:fixed;
+  display:none;
+  background:black;
+  border:2px solid gold;
+  padding:20px;
+  color:white;
+  border-radius:10px;
+  text-align:center;
+}
+
+/* video */
+video{
+  width:250px;
+  margin-top:10px;
+  border:2px solid red;
+  border-radius:10px;
+}
+
+/* music */
+audio{
+  margin-top:10px;
+}
+
+/* cake */
+.cake{
+  position:absolute;
+  bottom:20px;
+  font-size:45px;
+}
+
+</style>
+</head>
+
+<body onclick="startMusic()">
+
+<h1 onclick="showPopup()">💖 LOVELY JAZAL G 💖<br>BIRTHDAY MONTH 🎉</h1>
+
+<!-- IMAGE SLIDER -->
+<img id="img" src="pic1.jpg">
+
+<!-- CAKE -->
+<div class="cake">🎂</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+💖 I LOVE YOU 💖<br><br>
+<button onclick="closePopup()">Close</button>
+</div>
+
+<!-- VIDEO -->
+<video controls>
+  <source src="video.mp4" type="video/mp4">
+</video>
+
+<!-- MUSIC (WITH CONTROLS) -->
+<audio id="music" controls loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let started=false;
+
+function startMusic(){
+  if(!started){
+    document.getElementById("music").play();
+    started=true;
+  }
+}
+
+function showPopup(){
+  document.getElementById("popup").style.display="block";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+
+/* hearts */
+for(let i=0;i<25;i++){
+  let h=document.createElement("div");
+  h.classList.add("heart");
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(h);
+}
+
+/* slider */
+let pics=["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg"];
+let i=0;
+
+setInterval(()=>{
+  i=(i+1)%pics.length;
+  document.getElementById("img").src=pics[i];
+},2500);
+
+</script>
+
+</body>
+</html>
