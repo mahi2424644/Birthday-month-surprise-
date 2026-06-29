@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Month Story</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(black,#2b0000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:arial;
+  flex-direction:column;
+}
+
+/* title */
+h1{
+  color:gold;
+  font-size:36px;
+  animation: glow 1.5s infinite alternate;
+  cursor:pointer;
+  text-align:center;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px red;}
+  to{text-shadow:0 0 30px gold;}
+}
+
+/* story box */
+.story{
+  width:220px;
+  height:220px;
+  border:2px solid gold;
+  border-radius:15px;
+  overflow:hidden;
+  margin-top:15px;
+  position:relative;
+}
+
+.story img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:1s;
+}
+
+/* hearts */
+.heart{
+  position:absolute;
+  color:red;
+  font-size:18px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
+}
+
+/* letter */
+.letter{
+  position:fixed;
+  display:none;
+  background:black;
+  border:2px solid gold;
+  color:white;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+  z-index:10;
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0);}
+  to{transform:scale(1);}
+}
+
+/* video */
+.videoBox{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:20;
+}
+
+.videoBox video{
+  width:280px;
+  border:2px solid red;
+  border-radius:10px;
+}
+
+/* cake */
+.cake{
+  position:absolute;
+  bottom:20px;
+  font-size:50px;
+}
+
+</style>
+</head>
+
+<body onclick="startMusic()">
+
+<h1 onclick="openLetter()">LOVELY JAZAL G 💖 BIRTHDAY MONTH 🎉</h1>
+
+<!-- story -->
+<div class="story">
+  <img id="storyImg" src="pic1.jpg">
+</div>
+
+<div class="cake">🎂</div>
+
+<!-- letter -->
+<div class="letter" id="letter">
+  💖 I LOVE YOU 💖<br><br>
+  You are my everything ❤️<br><br>
+  <button onclick="closeLetter()">Close</button>
+  <button onclick="openVideo()">Watch Video 🎥</button>
+</div>
+
+<!-- video -->
+<div class="videoBox" id="videoBox">
+  <video controls>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- music -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let started=false;
+
+function startMusic(){
+  if(!started){
+    document.getElementById("music").play();
+    started=true;
+  }
+}
+
+/* story swipe */
+let pics=["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg"];
+let i=0;
+
+setInterval(()=>{
+  i=(i+1)%pics.length;
+  document.getElementById("storyImg").src=pics[i];
+},2000);
+
+/* letter */
+function openLetter(){
+  document.getElementById("letter").style.display="block";
+  fireworks();
+}
+
+function closeLetter(){
+  document.getElementById("letter").style.display="none";
+}
+
+function openVideo(){
+  document.getElementById("videoBox").style.display="block";
+}
+
+/* hearts */
+for(let i=0;i<40;i++){
+  let h=document.createElement("div");
+  h.classList.add("heart");
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(h);
+}
+
+/* fireworks */
+function fireworks(){
+  for(let i=0;i<50;i++){
+    let f=document.createElement("div");
+    f.style.position="absolute";
+    f.style.width="6px";
+    f.style.height="6px";
+    f.style.background=["gold","red","white","orange"][Math.floor(Math.random()*4)];
+    f.style.left=Math.random()*100+"vw";
+    f.style.top=Math.random()*100+"vh";
+    f.style.borderRadius="50%";
+    f.style.animation="boom 1s ease-out forwards";
+
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
+  }
+}
+
+</script>
+
+</body>
+</html>
