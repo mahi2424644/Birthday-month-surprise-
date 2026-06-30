@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Month Surprise ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:black;
+overflow:hidden;
+color:white;
+text-align:center;
+}
+
+/* Screens */
+.screen{
+position:fixed;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+}
+
+.active{
+display:flex;
+}
+
+/* Start */
+#heartBtn{
+font-size:90px;
+cursor:pointer;
+animation:beat 1s infinite;
+}
+
+@keyframes beat{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
+}
+
+/* Cake */
+#cake{
+font-size:140px;
+animation:float 1.5s infinite alternate;
+}
+
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(-15px);}
+}
+
+.cakeText{
+font-size:32px;
+margin-top:15px;
+color:#ffd700;
+font-weight:bold;
+}
+
+/* Photos */
+#slideshow img{
+width:85vw;
+max-width:500px;
+height:70vh;
+max-height:500px;
+object-fit:cover;
+border-radius:20px;
+border:4px solid gold;
+box-shadow:0 0 25px gold;
+}
+
+/* Buttons */
+.btn{
+padding:15px 30px;
+font-size:20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* Rose */
+#rose{
+font-size:160px;
+animation:beat 1.2s infinite;
+}
+
+/* Message */
+#messageBox{
+max-width:800px;
+line-height:1.8;
+font-size:22px;
+padding:20px;
+}
+
+/* Kisses */
+.kiss{
+position:absolute;
+font-size:24px;
+animation:fall 6s linear forwards;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-100px);
+opacity:1;
+}
+100%{
+transform:translateY(110vh);
+opacity:0;
+}
+}
+
+/* Fireworks */
+.firework{
+position:absolute;
+font-size:30px;
+animation:boom 1s linear forwards;
+}
+
+@keyframes boom{
+0%{
+transform:scale(0);
+opacity:1;
+}
+100%{
+transform:scale(2);
+opacity:0;
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<audio id="music" loop>
+<source src="song.mp3" type="audio/mp3">
+</audio>
+
+<!-- Start -->
+<div class="screen active" id="startScreen">
+<div id="heartBtn" onclick="startSurprise()">🫀</div>
+<h2 style="margin-top:20px;">TAP TO START ❤️</h2>
+</div>
+
+<!-- Cake -->
+<div class="screen" id="cakeScreen">
+<div id="cake">🎂</div>
+<div class="cakeText">HAPPY BIRTHDAY MONTH JANU ❤️</div>
+<button class="btn" onclick="startSlideshow()">TAP</button>
+</div>
+
+<!-- Slideshow -->
+<div class="screen" id="slideshow">
+<img id="slideImg" src="pic1.jpg">
+<button id="continueBtn" class="btn" style="display:none;" onclick="showContinue()">
+🌹 TAP TO CONTINUE
+</button>
+</div>
+
+<!-- Continue -->
+<div class="screen" id="continueScreen">
+<h1 style="font-size:90px;">🌹</h1>
+<button class="btn" onclick="showRose()">
+TAP TO CONTINUE 🌹
+</button>
+</div>
+
+<!-- Rose -->
+<div class="screen" id="roseScreen">
+<div id="rose">🌹</div>
+<button class="btn" onclick="showMessage()">
+TAP TO READ MY MESSAGE 💖
+</button>
+</div>
+
+<!-- Message -->
+<div class="screen" id="messageScreen">
+<div id="messageBox">
+<h2>HAPPY BIRTHDAY MONTH, MY LOVE. 🌹</h2>
+<br>
+
+YOU ARE THE MOST BEAUTIFUL PART OF MY LIFE, MY SAFE PLACE,
+MY PEACE IN EVERY STORM, AND THE REASON BEHIND MY HAPPIEST SMILES.
+<br><br>
+
+EVERY DAY WITH YOU FEELS LIKE A BEAUTIFUL BLESSING.
+YOUR LOVE MAKES MY WORLD BRIGHTER, MY HEART HAPPIER,
+AND MY LIFE MORE MEANINGFUL.
+<br><br>
+
+NO MATTER WHAT HAPPENS,
+NO MATTER WHERE LIFE TAKES US,
+MY HEART WILL ALWAYS FIND ITS WAY BACK TO YOU.
+I WILL ALWAYS CHOOSE YOU, AGAIN AND AGAIN,
+IN EVERY LIFETIME.
+<br><br>
+
+THANK YOU FOR BEING MY HAPPINESS,
+MY COMFORT, AND MY FOREVER PERSON.
+<br><br>
+
+I LOVE YOU TODAY, TOMORROW, AND FOREVER. ❤️
+<br><br>
+
+✨ HAPPY BIRTHDAY MONTH, MY LOVELY JAZAL. ✨
+<br><br>
+
+💖🌹 FOREVER YOURS. 🌹💖
+</div>
+</div>
+
+<script>
+
+const images=[
+"pic1.jpg",
+"pic2.jpg",
+"pic3.jpg",
+"pic4.jpg"
+];
+
+let current=0;
+
+function showScreen(id){
+document.querySelectorAll('.screen')
+.forEach(s=>s.classList.remove('active'));
+
+document.getElementById(id)
+.classList.add('active');
+}
+
+function startSurprise(){
+document.getElementById("music").play();
+showScreen("cakeScreen");
+}
+
+function startSlideshow(){
+
+showScreen("slideshow");
+
+let img=document.getElementById("slideImg");
+
+let interval=setInterval(()=>{
+current++;
+
+if(current>=images.length){
+current=0;
+}
+
+img.src=images[current];
+
+createFirework();
+
+},2000);
+
+setTimeout(()=>{
+clearInterval(interval);
+document.getElementById("continueBtn").style.display="block";
+},8000);
+}
+
+function showContinue(){
+showScreen("continueScreen");
+}
+
+function showRose(){
+showScreen("roseScreen");
+}
+
+function showMessage(){
+showScreen("messageScreen");
+}
+
+/* Kisses */
+setInterval(()=>{
+let kiss=document.createElement("div");
+kiss.className="kiss";
+kiss.innerHTML="💋";
+kiss.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(kiss);
+
+setTimeout(()=>{
+kiss.remove();
+},6000);
+
+},300);
+
+/* Fireworks */
+function createFirework(){
+
+for(let i=0;i<12;i++){
+
+let f=document.createElement("div");
+
+f.className="firework";
+f.innerHTML="💥";
+
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*80+"vh";
+
+document.body.appendChild(f);
+
+setTimeout(()=>{
+f.remove();
+},1000);
+
+}
+}
+
+</script>
+
+</body>
+  </html>
